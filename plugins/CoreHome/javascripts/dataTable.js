@@ -289,6 +289,7 @@ $.extend(DataTable.prototype, UIControl.prototype, {
         self.handleRelatedReports(domElem);
         self.handleTriggeredEvents(domElem);
         self.handleColumnHighlighting(domElem);
+        self.handleExpandFooter(domElem);
         self.setFixWidthToMakeEllipsisWork(domElem);
     },
 
@@ -1255,6 +1256,29 @@ $.extend(DataTable.prototype, UIControl.prototype, {
         $("td:first-child:even", domElem).addClass('label labelodd');
         $("tr:odd td", domElem).slice(1).addClass('column columnodd');
         $("tr:even td", domElem).slice(1).addClass('column columneven');
+    },
+
+    handleExpandFooter: function (domElem) {
+        if (!$('#dashboard').length) {
+            return;
+        }
+
+        var moveNode = $('.datatableFooterMessage', domElem);
+        if (!moveNode.length) {
+            moveNode = $('.datatableRelatedReports', domElem);
+        }
+        $('.dataTableFooterIcons', domElem).after(moveNode);
+        $('.expandDataTableFooterDrawer', domElem).after($('.dataTableFooterIcons', domElem));
+
+        var controls = $('.controls', domElem);
+        if (controls.length) {
+            $('.foldDataTableFooterDrawer', domElem).after(controls);
+        }
+
+        $('.foldDataTableFooterDrawer, .expandDataTableFooterDrawer', domElem).on('click', function () {
+            $('.dataTableFooterIcons', domElem).toggle();
+            $('.expandDataTableFooterDrawer', domElem).toggle();
+        });
     },
 
     handleColumnHighlighting: function (domElem) {

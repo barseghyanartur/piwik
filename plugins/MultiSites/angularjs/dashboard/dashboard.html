@@ -84,6 +84,11 @@
             </td>
         </tr>
 
+        <tr ng-if="!hasSuperUserAccess">
+            <td colspan="8">
+                <br/>
+            </td>
+        </tr>
         <tr>
             <td colspan="8" class="site_search">
                 <input type="text"
